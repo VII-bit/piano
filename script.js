@@ -3,10 +3,14 @@ function changeColor() {
 	let key = event.code;
 	if (key == `${key}`) {
 		document.getElementById(key).style.backgroundColor = 'grey';
+		if (key == 'Digit1') {
+		let audio = new Audio('');
+		audio.play();
+		}
 	}
 }
 
-function changeColor2() {
+function backColor() {
 	event.preventDefault();
 	let key = event.code;
 	if (key == `${key}`) {
@@ -23,5 +27,5 @@ function writeToInput() {
 
 
 window.addEventListener('keydown', changeColor);
-window.addEventListener('keyup', changeColor2);
+window.addEventListener('keyup', backColor);
 window.addEventListener('click', writeToInput);
