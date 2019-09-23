@@ -1,0 +1,66 @@
+button {
+	position: relative;
+	margin-top: 2px;
+	padding: 0.75em;
+	font-size: 1.5em;
+	padding-bottom: 5em;
+	padding-top: 2em;
+}
+
+div {
+    margin-left: 120px;
+    margin-right: auto;
+    margin-top: 2em;
+}
+
+.darkKey {
+	background-color: black;
+	color: white;
+	padding-bottom: 2em;
+	z-index: 1;
+}
+
+.whiteKey {
+	background-color: white;
+	right: 60px;
+}
+
+#Digit2 {
+	right: 35em;
+}
+
+#Digit4 {
+	right: 35em;
+}
+
+#Digit7 {
+	right: 32.5em;
+}
+
+#Digit9 {
+	right: 32.5em;
+}
+
+#Minus {
+	right: 32.5em;
+}
+
+#KeyW {
+	right: 30em;
+}
+
+#KeyR {
+	right: 30em;
+}
+
+#KeyY {
+	right: 30em;
+}
+
+#KeyO {
+	right: 28em;
+}
+
+#BracketLeft {
+	right: 28em
+}
