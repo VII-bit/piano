@@ -47,120 +47,59 @@ const songNotes = [
   "KeyO"
 ];
 
-function playOnKey() {
-  event.preventDefault();
-  const key = event.code;
-  if (typeof notes[key] !== "undefined" && lastbtn !== notes[key]) {
-    document.getElementById(key).style.backgroundColor = "#bdbebd";
-    const sound = new Audio(notes[key].src);
-    sound.play();
-    lastbtn = notes[key];
-  }
-}
+const hoverColor = "#bdbebd";
 
-function stopPlayOnKey() {
-  event.preventDefault();
-  const key = event.code;
-  if (typeof notes[key] !== "undefined") {
-    document.getElementById(key).style.backgroundColor =
-      event.target.style.color;
-    lastbtn = null;
-  }
-}
-
-function playOnMouse() {
-  document.getElementById("demoButton").click = audioSample();
-  keyNote = event.target.id;
-
-  if (typeof notes[keyNote] !== "undefined") {
-    document.getElementById(keyNote).style.backgroundColor = "#bdbebd";
-    const sound = new Audio(notes[keyNote].src);
-    sound.play();
-  }
-}
-
-const playNote = src => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(() => {
-        return new Audio(src).play();
-      });
-    }, 200);
-  });
+window.onload = () => {
+  const piano = document.getElementById("piano");
+  const newPiano = new Piano(notes);
+  document.addEventListener("keydown", newPiano.playOnKey);
+  document.addEventListener("keyup", newPiano.clearLastBtn);
+  piano.addEventListener("mouseup", newPiano.clearLastBtn);
+  piano.addEventListener("mousedown", newPiano.playOnKey);
+  document.getElementById("demoButton").onclick = newPiano.audioSample;
 };
 
-const audioSample = async () => {
-  for (let i = 0; i < songNotes.length; i++) {
-    const { src, id } = notes[songNotes[i]];
-    const element = document.getElementById(id);
-    const color = document.getElementById(id).style.color;
-
-    element.style.backgroundColor = "red";
-    const note = await playNote(src);
-    note();
-    element.style.backgroundColor = color;
+class Piano {
+  constructor(notesList) {
+    this.lastbtn = null;
+    this.notes = notesList;
   }
-};
 
-document.addEventListener("keydown", playOnKey);
-document.addEventListener("keyup", stopPlayOnKey);
-document.addEventListener("mousedown", playOnMouse);
-document.addEventListener("mouseup", () => {
-  if (typeof notes[keyNote] !== "undefined") {
-    document.getElementById(keyNote).style.backgroundColor =
-      event.target.style.color;
-  }
-});
+  clearLastBtn = () => (this.lastbtn = null);
 
-//----------Незаконченная попытка нарисовать интерфейс через код------
+  playOnKey = async event => {
+    const key = event.code || event.target.id;
+    if (!this.lastbtn && this.notes[key]) {
+      const sound = await this.playNote(notes[key].src, key, 100);
+      sound();
+      this.lastbtn = this.notes[key];
+    }
+  };
 
-/*
-let lastbtn;
-const handleClick = (src, id) => {
-	if (lastbtn !== id) {
-		const key = document.getElementById(id);
-		key.style.backgroundColor = "red";
-		const sound = new Audio(src);
-		sound.play();
-		sound.onpause = () => key.style.backgroundColor = "grey";
-		lastbtn = id;
-	}
+  playNote = (src, keyNote, delay = 200) => {
+    const element = document.getElementById(keyNote);
+    const color = element.style.color;
+    element.style.backgroundColor = hoverColor;
+
+    return new Promise(resolve =>
+      setTimeout(
+        () =>
+          resolve(() =>
+            (() => {
+              element.style.backgroundColor = color;
+              new Audio(src).play();
+            })()
+          ),
+        delay
+      )
+    );
+  };
+
+  audioSample = async () => {
+    for (let i = 0; i < songNotes.length; i++) {
+      const { src, id } = notes[songNotes[i]];
+      const note = await this.playNote(src, id);
+      note();
+    }
+  };
 }
-
-const notes = {
-	"KeyQ": {id: "KeyQ", src: "./sounds/a4.mp3", class: "whiteKey", onClickFn: handleClick},
-	"KeyW": {id: "KeyW", src: "./sounds/a-4.mp3", class: "whiteKey", onClickFn: handleClick},
-	"KeyE": {id: "KeyE", src: "./sounds/b4.mp3", class: "blackKey", onClickFn: handleClick},
-};
-
-window.onload = function() {
-	const app = document.getElementById("App");
-	const pianoKeyboard = document.createElement("div");
-	pianoKeyboard.setAttribute("id", "pianoKeyboard");
-
-	const pianoKeys = Object.entries(notes).map(pianoKey => {
-		const key = document.createElement("div");
-
-		key.setAttribute("class", pianoKey[1].class);
-
-		key.setAttribute("id", pianoKey[1].id);
-		
-		key.onclick =  () => pianoKey[1].onClickFn(pianoKey[1].src, pianoKey[1].id);
-
-		return key;
-	})
-	pianoKeys.map(key => {
-		pianoKeyboard.append(key);
-	})
-
-	app.append(pianoKeyboard);
-}
-
-window.addEventListener("keydown", ({ code }) => {
-	notes[code].onClickFn(notes[code].src, notes[code].id);
-})
-
-window.addEventListener("keyup", ({ code }) => {
-	lastbtn = null;
-})
-*/
