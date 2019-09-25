@@ -1,65 +1,98 @@
-button {
-	position: relative;
-	margin-top: 2px;
-	padding: 0.75em;
-	font-size: 1.5em;
-	padding-bottom: 4em;
+html {
+	height: 100%;
 }
-
-div {
-    margin-left: 120px;
-    margin-right: auto;
-    margin-top: 2em;
+body {
+	margin: 0;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
 }
-
-.darkKey {
+.blackKey {
+	position: absolute;
+	width: 27px;
+	height: 170px;
+	border: 1px solid black;
+	border-radius: 0 0 6px 6px;
+	cursor: pointer;
 	background-color: black;
 	color: white;
-	padding-bottom: 2em;
-	z-index: 1;
+	padding-top: 130px;
+	box-shadow: 0 2px #666;
 }
 
 .whiteKey {
-	background-color: white;
-	right: 60px;
+	width: 46px;
+	height: 290px;
+	background-color: #FFF;
+	border: 1px solid black;
+	border-radius: 0 0 6px 6px;
+	cursor: pointer;
+	padding-top: 250px;
+	box-shadow: 0 3px #666;
+}
+
+
+.piano {
+	display: flex;
+	position: relative;
+	margin-bottom: 100px;
+}
+
+.demoArea {
+	display: flex;
+	position: absolute;
+	margin-top: 150px;
+}
+
+#demoButton {
+	font-size:30px;
+	width: 300px;
+	height: 50px;
+	background: transparent;
+	color: #f2f2f2;
+	border-radius: 5px;
+	position: relative;
+	transition: all 1000ms ease; 
+}
+
+#Digit1 {
+	left:32px;
 }
 
 #Digit2 {
-	right: 35em;
+	left:78px;
 }
 
 #Digit4 {
-	right: 35em;
+	left:170px;
 }
 
-#Digit7 {
-	right: 32.5em;
+#Digit5 {
+	left:216px;
+}
+
+#Digit6 {
+	left:262px;
+}
+
+#Digit8 {
+	left:354px;
 }
 
 #Digit9 {
-	right: 32.5em;
+	left:400px;
 }
 
 #Minus {
-	right: 32.5em;
+	left:492px;
 }
 
-#KeyW {
-	right: 30em;
+#Equal {
+	left:538px;
 }
 
-#KeyR {
-	right: 30em;
-}
-
-#KeyY {
-	right: 30em;
-}
-
-#KeyO {
-	right: 28em;
-}
-
-#BracketLeft {
-	right: 28em
+#Backspace {
+	left:584px;
 }
